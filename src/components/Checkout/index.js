@@ -1,11 +1,11 @@
 import { Component } from "react";
 
-class Home extends Component{
+class Checkout extends Component{
     render(){
         return(
-            <h1>Home Page</h1>
+            <h1>Checkout</h1>
         )
     }
 }
 
-export default Home
+export default Checkout

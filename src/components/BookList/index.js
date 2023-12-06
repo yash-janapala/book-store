@@ -1,11 +1,11 @@
 import { Component } from "react";
 
-class Home extends Component{
+class BookList extends Component{
     render(){
         return(
-            <h1>Home Page</h1>
+            <h1>books list</h1>
         )
     }
 }
 
-export default Home
+export default BookList

@@ -1,11 +1,11 @@
 import { Component } from "react";
 
-class Home extends Component{
+class NotFound extends Component{
     render(){
         return(
-            <h1>Home Page</h1>
+            <h1>Not Found</h1>
         )
     }
 }
 
-export default Home
+export default NotFound

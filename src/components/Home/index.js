@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Header from "../Header";
+import {Link} from 'react-router-dom';
 import './index.css';
 
 class Home extends Component{
@@ -25,7 +26,9 @@ class Home extends Component{
                         designed with interiors that inspire and relax, allowing quiet
                         spaces to help you discover great books.
                         </p>
-                        <button className="explore-button">Explore Books</button>
+                        <Link to="/books" className="nav-link">
+                            <button className="explore-button">Explore Books</button>
+                        </Link>
                     </div>
                 </div>
             </div>

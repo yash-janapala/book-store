@@ -60,7 +60,8 @@ class BookDetails extends Component{
       <CartContext.Consumer>
         {(value) => {
           const { cartList, addToCart } = value;
-          let isAddedToCart = cartList.find(eachCartItem => eachCartItem.isbn13 === this.state.bookDetailsData.isbn13)
+          let isAddedToCart = cartList.find(eachCartItem => 
+            eachCartItem.isbn13 === this.state.bookDetailsData.isbn13)
           const onClickAddToCart = () => {
             addToCart({...this.state.bookDetailsData, quantity: 1})
           }

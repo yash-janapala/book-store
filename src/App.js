@@ -24,9 +24,8 @@ class App extends Component{
   deleteFromCart = (cartItem) => {
     this.setState((prevState) => ({
       cartList: prevState.cartList.filter(
-        (eachCartItem) => eachCartItem !== cartItem
-      ),
-    }));
+        (eachCartItem) => eachCartItem.isbn13 !== cartItem.isbn13
+      )}));
   };
 
   resetCart = () => {

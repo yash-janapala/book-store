@@ -4,8 +4,11 @@ import "./index.css";
 
 class CartItem extends Component {
     render(){
-        const {cartItemDetails} = this.props
+        const {cartItemDetails, handleDelete} = this.props
         const {title, subtitle, image, price} = cartItemDetails
+        const onClickDelete = () =>{
+            handleDelete(cartItemDetails)
+        }
         return (
             <div className = "cart-item-container">
                 <img src={image} alt={title} className="cart-book-image" />
@@ -15,7 +18,7 @@ class CartItem extends Component {
                     <h1 className="book-price">{price}</h1>
                 </div>
                 <div className = "product-actions-container">
-                    <button className = "delete-button">
+                    <button className = "delete-button" onClick={onClickDelete}>
                         <FaTrash className = "delete-icon"/>
                     </button>
                 </div>

@@ -4,6 +4,8 @@ import SearchInput from "../SearchInput";
 import './index.css';
 import PriceRange from "../PriceRange";
 import BookItem from "../BookItem";
+import ErrorMessage from "../ErrorMessage";
+import Loader from "../Loader";
 
 const sampleDate = {
     total:20,
@@ -56,6 +58,8 @@ class BookList extends Component{
                         </div>
                     </div>                    
                 </div>
+                <Loader />
+                <ErrorMessage />
             </div>
         )
     }

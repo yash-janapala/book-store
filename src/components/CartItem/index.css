@@ -6,7 +6,18 @@
 }
 
 .book-image{
-    width: 200px;
+    width: 40%;
+    max-width: 200px;
+}
+
+.book-subtitle{
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .book-subtitle {
+      display: inline;
+    }
 }
 
 .product-info-container{
@@ -22,15 +33,6 @@
     flex-direction: row;
     justify-content: end;
     align-items: center;
-}
-
-.delete-button{
-    background-color:#3e434b;;
-    height: 45px;
-    width: 45px;
-    border-radius: 10px;
-    border-width: 0px;
-    padding: 5px;
 }
 
 .delete-button{
@@ -59,5 +61,5 @@
     flex-direction: row;
     justify-content: end;
     align-items: center;
-    padding: 20px
+    padding: 20px;
 }

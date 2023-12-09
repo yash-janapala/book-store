@@ -14,6 +14,8 @@ const apiStatusConstants = {
     failure : "FAILURE"
 }
 
+let priceRangeExtreme = [0,100];
+
 class BookList extends Component{
     state = {
         apiStatus : apiStatusConstants.initial,
@@ -22,13 +24,11 @@ class BookList extends Component{
     }
 
     componentDidMount(){
-        this.setState({apiStatus:apiStatusConstants.inProgress})
         this.getBooks("")
     }
 
-    getPriceRange = () => {
-        const {booksData, priceRangeValue} = this.state
-        let [minPrice, maxPrice] = priceRangeValue
+    getPriceRange = (booksData) => {
+        let [minPrice, maxPrice] = [0,0]
         booksData.map((eachBook) => {
           const price = parseFloat(eachBook.price.slice(1))
           if (price < minPrice){
@@ -38,10 +38,26 @@ class BookList extends Component{
           }
           return null;
         })
-        this.setState({priceRangeValue: [Math.round(minPrice), Math.round(maxPrice)]})
+        priceRangeExtreme = [Math.round(minPrice), Math.round(maxPrice)]
+        return priceRangeExtreme
+    }
+
+    filterBooksByPriceRange = () => {
+        const {booksData, priceRangeValue} = this.state
+        const filteredBooks = booksData.filter((eachBook) => {
+          const price = parseFloat(eachBook.price.slice(1))
+          const isPriceInRange = price >= priceRangeValue[0] && price <= priceRangeValue[1]
+          return isPriceInRange
+        })
+        return filteredBooks
+    }
+    
+    onChangeSliderPosition = (sliderPositions) => {
+        this.setState({priceRangeValue: sliderPositions})
     }
     
     getBooks = async (searchQuery) => {
+        this.setState({apiStatus: apiStatusConstants.inProgress})
         let bookListUrl = "";
         if (searchQuery === ""){
           bookListUrl = "https://api.itbook.store/1.0/new"
@@ -49,11 +65,12 @@ class BookList extends Component{
         else{
           bookListUrl = `https://api.itbook.store/1.0/search/${searchQuery}`
         }
-        console.log(bookListUrl)
+
         const response = await fetch(bookListUrl)
         if (response.ok) {
             const jsonResponse = await response.json();
-            this.setState({apiStatus: apiStatusConstants.success, booksData: jsonResponse.books}, this.getPriceRange())
+            const priceRangeExtreme = this.getPriceRange(jsonResponse.books)
+            this.setState({apiStatus: apiStatusConstants.success, booksData: jsonResponse.books, priceRangeValue: priceRangeExtreme})
         } else if (response.status === 404) {
             this.setState({apiStatus: apiStatusConstants.failure})
         }
@@ -65,13 +82,16 @@ class BookList extends Component{
     }
     
     renderSuccessView(){
-        const {booksData, priceRangeValue} = this.state
+        const {priceRangeValue} = this.state
         return (
             <>
                 <h1 className="book-items-heading">Books</h1>
-                <PriceRange sliderPositions = {priceRangeValue}/>
+                <PriceRange 
+                    sliderExtremes = {priceRangeExtreme} 
+                    sliderPositions = {priceRangeValue} 
+                    onChangeSliderPosition = {this.onChangeSliderPosition}/>
                 <ul className="book-list-container">
-                {booksData.map((eachbook) => (
+                {this.filterBooksByPriceRange().map((eachbook) => (
                     <BookItem key= {eachbook.isbn13} bookItemDetails={eachbook}/>
                 ))}                
                 </ul>

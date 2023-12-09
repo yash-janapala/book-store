@@ -2,6 +2,7 @@ import { Component } from "react";
 import Header from '../Header';
 import SearchInput from "../SearchInput";
 import './index.css';
+import PriceRange from "../PriceRange";
 
 const sampleDate = {
     total:20,
@@ -41,7 +42,7 @@ class BookList extends Component{
                 <div className = "book-list-container">
                     <div className = "book-list-content-container">
                         <SearchInput/>
-                        <div>PriceRange</div>
+                        <PriceRange/>
                         <h1 className="book-items-heading">Books</h1>
                         <div className = "book-list-container">
                             <div >

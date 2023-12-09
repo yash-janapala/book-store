@@ -1,5 +1,5 @@
 .book-item-container {
-    flex: 1 1 30%;
+    flex: 0 1 30%;
     text-align: center;
     box-sizing: "border-box";
     padding: 0 10px;
@@ -29,4 +29,13 @@
     font-size: 18px;
     margin: 5px;
     font-weight: bold;
+}
+
+.book-item-nav-link{
+    text-decoration: none;
+    color: black; 
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
 }

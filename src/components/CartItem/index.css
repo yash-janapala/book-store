@@ -5,17 +5,17 @@
     justify-content: stretch;
 }
 
-.book-image{
+.cart-book-image{
     width: 40%;
     max-width: 200px;
 }
 
-.book-subtitle{
+.cart-book-subtitle{
     display: none;
 }
 
 @media screen and (min-width: 768px) {
-    .book-subtitle {
+    .cart-book-subtitle {
       display: inline;
     }
 }
@@ -31,7 +31,7 @@
     display:flex;
     width: 20%;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
 }
 
@@ -59,7 +59,7 @@
     display:flex;
     width: 15%;
     flex-direction: row;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     padding: 20px;
 }

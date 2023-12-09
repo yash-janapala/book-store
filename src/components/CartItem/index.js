@@ -18,10 +18,10 @@ class CartItem extends Component {
     render(){
         return (
             <div className = "cart-item-container">
-                <img src={image} alt={title} className="book-image" />
+                <img src={image} alt={title} className="cart-book-image" />
                 <div className = "product-info-container">
                     <h1 className="book-title">{title}</h1>
-                    <p className="book-subtitle">{subtitle}</p>
+                    <p className="cart-book-subtitle">{subtitle}</p>
                     <h1 className="book-price">{price}</h1>
                 </div>
                 <div className = "product-actions-container">

@@ -5,6 +5,13 @@ import ErrorMessage from "../ErrorMessage";
 
 import "./index.css";
 
+const apiStatusConstants ={
+  initial: "INITIAL",
+  inProgress: "IN_PROGRESS",
+  success: "SUCCESS",
+  failure: "FAILURE"
+}
+
 const book = {
   error: "0",
   title: "Securing DevOps",
@@ -44,92 +51,113 @@ const {
 
 
 class BookDetails extends Component{
-    render(){
-        return(
-            
+
+  state = {
+    apiStatus:apiStatusConstants.initial,
+    bookDetailsData: {}
+  }
+
+  componentDidMount(){
+    this.setState({apiStatus: apiStatusConstants.inProgress})
+    this.getBookDetails()
+  }
+
+  getBookDetails = async () => {
+    const bookUrl = "https://api.itbook.store/1.0/books"
+    const response = await fetch(bookUrl)
+    if (response.ok) {
+        const jsonResponse = await response.json();
+        this.setState({apiStatus: apiStatusConstants.success, booksData: jsonResponse.books}, this.getPriceRange())
+      } else if (response.status === 404) {
+        this.setState({apiStatus: apiStatusConstants.failure})
+    }
+  }
+
+  render(){
+    return(        
       <>
-      <Header />
-      <div className="book-details-container">
-        <div className="book-details-content-container">
-          <div className="book-basic-details-container">
-            <div className="book-details-image-container">
-              <img src={image} alt={title} className = "book-details-image"/>
-            </div>
-            <div className="book-other-basic-details">
-              <h1 className="book-details-heading book-details-title">
-                {title}
-              </h1>
-              <p className="book-details-subtitle">{subtitle}</p>
-              <p className="book-details-author">{authors}</p>
-              <p className="book-details-release-year">
-                Publication Year: {year}
-              </p>
-              <hr className="horizontal-rule display" />
-              <p className="book-details-price">{price}</p>
-              <div className="buttons-container">
-                <button className="book-details-button">Add to Cart</button>
+        <Header />
+        <div className="book-details-container">
+          <div className="book-details-content-container">
+            <div className="book-basic-details-container">
+              <div className="book-details-image-container">
+                <img src={image} alt={title} className = "book-details-image"/>
+              </div>
+              <div className="book-other-basic-details">
+                <h1 className="book-details-heading book-details-title">
+                  {title}
+                </h1>
+                <p className="book-details-subtitle">{subtitle}</p>
+                <p className="book-details-author">{authors}</p>
+                <p className="book-details-release-year">
+                  Publication Year: {year}
+                </p>
+                <hr className="horizontal-rule display" />
+                <p className="book-details-price">{price}</p>
+                <div className="buttons-container">
+                  <button className="book-details-button">Add to Cart</button>
+                </div>
               </div>
             </div>
+            <hr className="horizontal-rule" />
+            <div>
+              <h1 className="book-details-heading">Product Description</h1>
+              <p>{desc}</p>
+            </div>
+            <hr className="horizontal-rule" />
+            <div>
+              <h1 className="book-details-heading">Product Details</h1>
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Title</th>
+                    <td>{title}</td>
+                  </tr>
+                  <tr>
+                    <th>Subtitle</th>
+                    <td>{subtitle}</td>
+                  </tr>
+                  <tr>
+                    <th>Authors</th>
+                    <td>{authors}</td>
+                  </tr>
+                  <tr>
+                    <th>Publisher</th>
+                    <td>{publisher}</td>
+                  </tr>
+                  <tr>
+                    <th>ISBN10</th>
+                    <td>{isbn10}</td>
+                  </tr>
+                  <tr>
+                    <th>ISBN13</th>
+                    <td>{isbn13}</td>
+                  </tr>
+                  <tr>
+                    <th>Pages</th>
+                    <td>{pages}</td>
+                  </tr>
+                  <tr>
+                    <th>Year</th>
+                    <td>{year}</td>
+                  </tr>
+                  <tr>
+                    <th>Rating</th>
+                    <td>{rating}</td>
+                  </tr>
+                  <tr>
+                    <th>Price</th>
+                    <td>{price}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <hr className="horizontal-rule" />
           </div>
-          <hr className="horizontal-rule" />
-          <div>
-            <h1 className="book-details-heading">Product Description</h1>
-            <p>{desc}</p>
-          </div>
-          <hr className="horizontal-rule" />
-          <div>
-            <h1 className="book-details-heading">Product Details</h1>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Title</th>
-                  <td>{title}</td>
-                </tr>
-                <tr>
-                  <th>Subtitle</th>
-                  <td>{subtitle}</td>
-                </tr>
-                <tr>
-                  <th>Authors</th>
-                  <td>{authors}</td>
-                </tr>
-                <tr>
-                  <th>Publisher</th>
-                  <td>{publisher}</td>
-                </tr>
-                <tr>
-                  <th>ISBN10</th>
-                  <td>{isbn10}</td>
-                </tr>
-                <tr>
-                  <th>ISBN13</th>
-                  <td>{isbn13}</td>
-                </tr>
-                <tr>
-                  <th>Pages</th>
-                  <td>{pages}</td>
-                </tr>
-                <tr>
-                  <th>Year</th>
-                  <td>{year}</td>
-                </tr>
-                <tr>
-                  <th>Rating</th>
-                  <td>{rating}</td>
-                </tr>
-                <tr>
-                  <th>Price</th>
-                  <td>{price}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <hr className="horizontal-rule" />
         </div>
-      </div>
-      <Loader/>
-      <ErrorMessage/>
-    </>
+        <Loader/>
+        <ErrorMessage/>
+      </>
         )
     }
 }
